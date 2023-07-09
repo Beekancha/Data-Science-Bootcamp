@@ -1,0 +1,25 @@
+library(rvest)
+library(tidyverse)
+library(dplyr)
+
+url <- "https://www.fifaratings.com/players"
+
+player_name <- url %>%
+  read_html() %>%
+  html_nodes(".entry-font-narrow a") %>%
+  html_text2()
+
+position <- url %>%
+  read_html() %>%
+  html_nodes(".entry-subtext-font a") %>%
+  html_text2()
+ 
+team <- url %>%
+  read_html() %>%
+  html_nodes(".text-dark") %>%
+  html_text()
+
+df2 <- data_frame(player_name , position, team) %>%
+       head(20)
+
+View(df2)   
