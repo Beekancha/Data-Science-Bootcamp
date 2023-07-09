@@ -1,0 +1,162 @@
+.open B-restaurant.db
+-------------------------
+-----CREATE TABLE--------
+
+DROP TABLE menu;
+CREATE TABLE IF NOT EXISTS menu(
+  menu_id     int,
+  menu_name   text
+);
+
+DROP TABLE price ;
+CREATE TABLE IF NOT EXISTS price (
+  menu_id     int,
+  menu_price   real
+);
+
+DROP TABLE branch ;
+CREATE TABLE IF NOT EXISTS branch(
+  branch_id     int,
+  city_location  text,
+  country_location   text
+);
+
+DROP TABLE staff ;
+CREATE TABLE IF NOT EXISTS staff(
+  branch_id  int,
+  staff_name  text,
+  staff_salary real,
+  staff_position text
+);
+
+DROP TABLE customer ;
+CREATE TABLE IF NOT EXISTS customer(
+  customer_id int,
+  customer_name  text,
+  customer_gender  text
+);
+
+DROP TABLE customer_order ;
+CREATE TABLE IF NOT EXISTS customer_order(
+  customer_id int,
+  branch_id int,
+  date_time text,
+  menu_id   int
+);
+  
+-------------------------
+-----INSERT VALUE--------
+
+INSERT INTO menu values
+    (1,'French fried'),
+    (2,'Chicken joint fried'),
+    (3,'Pizza'),
+    (4,'Pasta'),
+    (5,'Ice-cream'),
+    (6,'Cola');
+
+INSERT INTO price values
+    (1,60),
+    (2,80),
+    (3,200),
+    (4,250),
+    (5,40),
+    (6,20);
+
+INSERT INTO branch values
+    (1,'Bangkok','Thailand'),
+    (2,'Phuket','Thailand'),
+    (3,'Penang','Malaysia');
+
+  INSERT INTO staff values
+    (1,'Vun',20000,'cook'),
+    (1,'Bee',12000,'waitress'),
+    (1,'Gift',10000,'waiter'),
+    (2,'Boy',15000,'cook'),
+    (2,'Jay',9000,'waiter'),
+    (3,'Tony',15000,'cook'),
+    (3,'Linda',9000,'waitress');
+
+  INSERT INTO customer values
+    (1,'Chris','M'),
+    (2,'Tomas','M'),
+    (3,'Steven','M'),
+    (4,'Valentina','FM'),
+    (5,'Sara','FM');
+
+  INSERT INTO customer_order values
+    (1,1,'2022-12-22 12:00:46',2),
+    (1,1,'2022-12-22 12:05:01',4),
+    (2,1,'2023-01-05 15:04:55',3),
+    (3,2,'2022-12-31 18:45:25',3),
+    (3,3,'2023-01-10 16:15:05',5),
+    (4,3,'2023-01-20 17:25:50',1),
+    (4,3,'2023-01-20 17:26:00',3),
+    (5,2,'2023-01-03 18:45:25',2),
+    (5,1,'2023-01-11 10:35:45',6);
+
+.mode column
+.header on 
+
+SELECT
+    menu.menu_id,
+    menu.menu_name AS Menu,
+    price.menu_price AS Price
+FROM menu, price
+WHERE menu.menu_id = price.menu_id;
+  
+SELECT 
+  branch.branch_id,
+  branch.city_location AS Location,
+  SUM(staff.staff_salary) AS Staff_Expense
+FROM branch
+JOIN staff ON branch.branch_id = staff.branch_id
+GROUP BY Location
+ORDER BY Staff_Expense DESC;
+
+SELECT 
+  staff_position AS Position,
+  COUNT(staff.staff_position) AS Headcount,
+  ROUND(AVG(staff.staff_salary),2) AS AVGStaff_Expense
+FROM branch
+JOIN staff ON branch.branch_id = staff.branch_id
+GROUP BY staff_position
+ORDER BY AVGStaff_Expense DESC;
+
+SELECT
+  menu.menu_name AS Menu,
+  COUNT(customer_order.menu_id) AS order_count
+FROM menu, customer_order
+WHERE menu.menu_id = customer_order.menu_id
+GROUP BY menu_name
+ORDER BY 2;
+
+
+WITH thailand_branch AS(
+  SELECT * FROM branch
+  WHERE UPPER(country_location) = 'THAILAND'
+), customer_order_2023 AS(
+  SELECT * FROM customer_order
+  WHERE STRFTIME('%Y',date_time) = '2023'
+)
+
+SELECT
+  TH.city_location AS Branch,
+  STRFTIME('%Y-%m-%d',Cus23.date_time) AS Date,
+  menu.menu_name AS Menu,
+  price.menu_price AS billing
+FROM thailand_branch AS TH
+JOIN customer_order_2023 AS Cus23 ON TH.branch_id = Cus23.branch_id
+JOIN price ON Cus23.menu_id =  price.menu_id
+JOIN menu ON price.menu_id = menu.menu_id
+ORDER BY billing;
+
+SELECT 
+  C.customer_name As Name,
+  B.city_location As Branch,
+  COUNT(O.branch_id) As N_Buying
+FROM customer AS C 
+JOIN customer_order AS O ON C.customer_id = O.customer_id
+JOIN branch AS B ON O.branch_id = B.branch_id
+GROUP BY Name 
+ORDER BY N_Buying DESC;
