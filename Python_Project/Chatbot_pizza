@@ -1,0 +1,97 @@
+def chatbot():
+    a = 0
+    price = 0
+    exit_conditions = ("q", "quit", "n", "no")
+    while a == 0:
+        i = input("Hi! Welcome to BKK Pizzeria! Would you like to order a pizza? [Y/N] ")
+        i = i.lower()
+        # crust = ("thin","thick")
+        # topping = ("hawaiian","new orleans chickens","pepperoni")
+        # sauce = ("bbq","pesto")
+        
+        if i in exit_conditions:
+            return "Good bye, hope to see you again soon!"
+        
+        elif i == "y":
+            
+            b = 0
+            c = 0
+            d = 0
+
+            while b == 0:
+                j = input("What pizza crust would you like? [(1) thin, (2) thick] ")
+                if j == "1":
+                    crust = "thin"
+                    b += 1
+                    price += 100
+                elif j == "2":
+                    crust = "thick"
+                    b += 1
+                    price += 150
+                else:
+                    print("Please select either '1' or '2'.")
+            
+            while c == 0:
+                k = input("What topping would you want your pizza to have? [(1) hawaiian, (2) new orleans chickens, (3) pepperoni] ")
+                if k == "1":
+                    topping = "hawaiian"
+                    c += 1
+                    price += 75
+                elif k == "2":
+                    topping = "new orleans chickens"
+                    c += 1
+                    price += 50
+                elif k == "3":
+                    topping = "pepperoni"
+                    c += 1
+                    price += 25
+                else:
+                    print("Please select either '1', '2', or '3'.")
+
+            while d == 0:
+                l = input("What sauce do you prefer? [(1) BBQ, (2) pesto] ")
+                if l == "1":
+                    sauce = "BBQ"
+                    d += 1
+                    price += 10
+                elif l == "2":
+                    sauce = "pesto"
+                    d += 1
+                    price += 15
+                else:
+                    print("Please select either '1' or '2'.")
+
+            e = 0
+            while e == 0:
+                price = str(price)
+                m = input("Here are your orders: '"+crust+"' crust with '"+topping+"' toppings and '"+sauce+"' sauce. Total: "+price+" baht.\nWould you like to confirm this order or try again? [(1) confirm (2) redo] ")
+                if m == "1":
+                    f = 0
+                    while f == 0:
+                        print("Please give us your name and mobile no. so we can contact you.")
+                        
+                        n = input("Name: ")
+                        n = n.title()
+                        
+                        o = input("Mobile no.: ")
+                        
+                        print("\nMr/Mrs. "+n+"\nTel.: "+o)
+                        p = input("Is this information correct? [Y/N] ")
+                        p = p.lower()
+                        
+                        if p == "y":
+                            print("\nThank you Mr/Mrs. "+ n + " for ordering with BKK Pizzeria, we'll contact you as soon as your pizza is complete.")
+                            f += 1
+                            a += 1
+                            e += 1
+                elif m == "2":
+                    e += 1
+                    price = 0
+                else:
+                    print("Please select either '1' or '2'.")
+
+
+        else:
+            print("I'm sorry, I don't understand your request.")
+
+chatbot()
