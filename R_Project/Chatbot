@@ -1,0 +1,47 @@
+chatbot  <- function() {
+
+  print ( "Welcone to Bibble Salon! what can I help you?")
+  print ( "Instruction: select your request '1' = Make a booking, '2' = Services&Prices, '3' = Address, '4' = Exit")
+  request <- c("1","2","3","4")
+  service <- c("Women's Haircut","Men's Haircut","Hair Color")
+  sevice_price <- c(
+	"Women's Haircut = 500 THB",
+	"Men's Haircut = 350 THB",
+	"Hair Color = 1,000 THB"
+  )
+
+  while(TRUE) {
+  request_select <-  readline ("Where would you like to start: ")
+
+    if (request_select == "4") {
+      print ("Thank you!")
+      break
+
+    } else if(request_select == "2"){
+      print (sevice_price)
+      break
+
+    } else if (request_select == "3"){
+      print("Thonglor 23, https://goo.gl/maps/w58BVs3ckxqD5m3E6 ")
+      break
+      
+
+    } else if (request_select == "1"){
+      print ("Instruction: type kind of services 'Women's Haircut','Men's Haircut','Hair Color'")}
+      service_select <- readline ("What service are you looking for?: ")
+      if (service_select == service_select) {
+      name = readline ("Great, please advise your full name?: ")
+      datetime = readline ("Which date and time suits you best?: ")
+      contact = readline ("Please advise your telephone number?: ")
+      print(paste("Congrats",name, ", your" ,service_select, "has been confirmed on" ,datetime, " "))
+      break
+      
+    
+    } else {
+      print("Thank you")
+
+    }
+  }
+}
+
+chatbot()
