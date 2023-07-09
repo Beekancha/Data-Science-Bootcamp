@@ -1,0 +1,51 @@
+import random 
+
+def pao_ying_chup():
+    item_list = ["paper", "hammer","scissors"]
+    user_score = 0
+    bot_score = 0
+
+    print("Welcome to Pao Ying Chub Game hahaha !")
+    print("You can choose one item")
+
+    while True:
+        user_choose = input(" Choose one 'paper', 'hammer', 'scissors' : ")
+        if user_choose == "exit":
+            print("score summary")
+            print(f"Your score {user_score}")
+            print(f"Bot score {bot_score}")
+            print("Thanks for playing")
+            break
+        elif user_choose not in item_list:
+            print("Please choose one in list")
+            continue
+
+        bot_choose = random.choice(item_list)
+
+        if user_choose == bot_choose:
+            print(f"your choice : {user_choose}")
+            print(f"bot choice: {bot_choose}")
+            print("tie")
+
+        elif user_choose == "hammer" and bot_choose == "scissors":
+            print(f"your choice : {user_choose}")
+            print(f"bot choice: {bot_choose}")
+            print("win")
+
+        elif user_choose == "scissors" and bot_choose == "paper":
+            print(f"your choice : {user_choose}")
+            print(f"bot choice: {bot_choose}")
+            print("win")
+
+        elif user_choose == "paper" and bot_choose == "hammer":
+            print(f"your choice : {user_choose}")
+            print(f"bot choice: {bot_choose}")
+            print("win")
+
+        else:
+            print(f"your choice : {user_choose}")
+            print(f"bot choice: {bot_choose}")
+            print("your lose")
+            bot_score += 1
+            
+   pao_ying_chup()         
