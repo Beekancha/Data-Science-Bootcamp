@@ -1,0 +1,108 @@
+---
+title: "HW Data Visualization"
+author: "bbee"
+date: "2023-03-01"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+![diamond image](https://hips.hearstapps.com/hmg-prod/images/starg-ex-high-res-stock-photography-872545574-1531772321.jpg)
+
+## Chart No.1 - Cut Diamond Proportions
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+ggplot(diamonds, aes(cut,fill = color)) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = c("#ede0d4","#e6ccb2","#ffcdb2","#ffb4a2","#e5989b","#b5838d","#6d6875")) +
+  theme_minimal() +
+  labs (
+    title = "Cut Diamond Proportions",
+    x = "Cut",
+    y = "Count",
+    subtitle = "We found Cut Diamond Proportions",
+    caption = "datasource: diamonds"
+  ) 
+```
+
+----
+
+## Chart No. 2 - Relationship between carat and price
+
+```{r message=FALSE, warning=FALSE}
+ggplot(diamonds %>% sample_n(500), 
+       aes (carat,price, col = cut)) +
+  geom_point(size=5, alpha = 0.8) +
+  theme_minimal() +
+  labs (
+    tittle = "Relationship between carat and price",
+    x = "Carat",
+    y = "Price USD",
+    subtitle = "We found a posiive relationship between two variables.",
+    captiom = "datasource: diamonds"
+  ) +
+  scale_color_brewer(type = "qual", palette = 4)
+```
+
+----
+
+## Chart No. 3 - Relationship between carat and price by color
+```{r message=FALSE, warning=FALSE}
+set.seed(46)
+ggplot(diamonds %>% sample_n(500)
+       , aes(carat, price)) +
+  geom_point() +
+  geom_smooth(col = "#ef476f", fill = "#fcd5ce") +
+  facet_wrap(~color, ncol= 4) +
+  theme_minimal() +
+  labs(
+    title = "Relationship between carat and price by color",
+       x = "Carat",
+       y = "Price USD",
+    subtitle = "We found a posiive relationship between two variables.",
+    caption = "datasource: diamonds"
+  ) +
+   scale_color_brewer(type = "div", palette = 5)
+```
+
+----
+
+## Chart No. 4 - Compare clarity group by price
+```{r message=FALSE, warning=FALSE}
+set.seed(46)
+ggplot(diamonds %>% sample_n(500), aes(clarity,price)) +
+  geom_boxplot(fill = "salmon") +
+  theme_minimal() +
+  labs(
+    title = "Compare clarity group by price",
+       x = "Clarity",
+       y = "Price USD",
+    subtitle = "We found SI1 clarity has the highest median than other clarity",
+    caption = "datasource: diamonds"
+  ) 
+```
+
+Note:
+
+- SI1 clarity has the highest median than other clarity
+- IF clarity has somewhat less variability
+- Every clarity has an outlier except I1.
+
+----
+
+## Chart No. 5 - Most clarity of each cut
+```{r message=FALSE, warning=FALSE}
+diamonds %>%
+    count(clarity, cut) %>% 
+    ggplot(aes(cut, clarity, fill = n)) +
+    geom_tile() +
+   labs(
+    title = "Most clarity of each cut",
+       x = "Cut",
+       y = "Clarity",
+    subtitle = "Ideal cut have VS2 clarity at the most",
+    caption = "datasource: diamonds",
+    fill = "count") +
+    scale_fill_gradient(low = "white", high = "#f4acb7")
+```
