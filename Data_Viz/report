@@ -1,0 +1,52 @@
+---
+title: "homework data viz"
+author: "bbee"
+date: "2023-02-25"
+output: html_document
+---
+
+# Hello World
+
+This is markdown language. Today we learn a few topics in R.
+
+- database
+- working with dat
+- ggplot
+- rmarkdown
+
+## hahaha
+
+### h3
+
+#### h4
+
+## Homework
+
+explore dataframe 'diamonds' and create 5 visualization
+
+### Chart 1 - relationship between carat and proce
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+head(diamonds)
+```
+Create my first chart
+```{r message=FALSE}
+ggplot(diamonds %>% sample_n(500),
+       aes(carat, price)) +
+  geom_point() +
+  geom_smooth()
+```
+We found a posiive relationship between two variables.
+Another chart
+```{r}
+ggplot(diamonds, aes(cut, fill=color)) +
+  geom_bar(position="fill") +
+  theme_minimal()
+```
+comment what was we found in this chart?
+
+[google](https://www.google.com/)
+
+Add an image to this report
+
+![new image](https://images.unsplash.com/photo-1677174262675-3b3118c1eb14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80)
