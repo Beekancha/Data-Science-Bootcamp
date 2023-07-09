@@ -1,0 +1,40 @@
+library(rvest)
+library(tidyverse)
+library(dplyr)
+
+url <- "https://www.imdb.com/search/title/?groups=top_100&sort=user_rating%2Cdesc"
+
+movie_name <- url %>%
+  read_html() %>%
+  html_nodes(".lister-item-header a") %>%
+  html_text2()
+
+year <- url %>%
+  read_html() %>%
+  html_nodes(".text-muted.unbold") %>%
+  html_text2()
+
+genres <- url %>%
+  read_html() %>%
+  html_nodes(".genre") %>%
+  html_text2()
+
+rating <- url %>%
+  read_html() %>%
+  html_nodes(".ratings-imdb-rating strong") %>%
+  html_text2() %>%
+  as.numeric()
+
+old_ranking <- url %>%
+  read_html() %>%
+  html_nodes(".top-chart-rank+ span") %>%
+  html_text2()
+
+
+published_year <- gsub('[^[:alnum:] ]','', year)
+ranking <- as.numeric(gsub('[#]','', old_ranking))
+
+  df <- data_frame(ranking, movie_name, published_year, genres, rating)  %>%
+    arrange(ranking)
+
+  View(df)     
