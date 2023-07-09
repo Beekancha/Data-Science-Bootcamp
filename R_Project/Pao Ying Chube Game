@@ -1,0 +1,72 @@
+Game <- function () {
+  print ("Hello, welcome to Pao Ying Chube Game")
+  username = readline("What is your name? : ")
+  print("Please choose you option from H (Hammer), P (Paper), S (Scrissor) , E (Exit Game)")
+  print ("Start Game")
+
+  options <- c("H","S","P")
+  print(options)
+
+  player <- 0
+  computer <- 0
+  
+  while (TRUE) {
+
+  user_select <- readline ("Choose one: ")
+  computer_select <- sample(options, 1)
+
+    ##tie
+  if(user_select == computer_select){
+    print(paste("You choose",user_select))
+    print(paste("Computer choose",computer_select))
+    print("tie!")
+
+    ##win
+  } else if ( user_select == "P" & computer_select == "H"){
+    print(paste("You choose",user_select))
+    print(paste("Computer choose",computer_select))
+    print ("win!")
+    player <- player + 1
+  } else if ( user_select == "H" & computer_select == "S"){
+    print(paste("You choose",user_select))
+    print(paste("Computer choose",computer_select))
+    print ("win!")
+    player <- player + 1
+  } else if ( user_select == "S" & computer_select == "P"){
+    print(paste("You choose",user_select))
+    print(paste("Computer choose",computer_select))
+    print ("win!")
+    player <- player + 1
+   
+
+    ##lose
+  } else if ( computer_select == "P" & user_select == "H"){
+    print(paste("You choose",user_select))
+    print(paste("Computer choose",computer_select))
+    print ("lose!")
+    computer <- computer + 1
+  } else if ( computer_select == "H" & user_select == "S"){
+    print(paste("You choose",user_select))
+    print(paste("Computer choose",computer_select))
+    print ("lose!")
+    computer <- computer + 1
+  } else if ( computer_select == "S" & user_select == "P"){
+    print(paste("You choose",user_select))
+    print(paste("Computer choose",computer_select))
+    print ("lose!")
+    computer <- computer + 1
+
+  } else if (user_select == "E") { 
+    print("Thank you for playing :)")
+    #score board
+    print("Score Board")
+    print(paste(username, "Score: ", player))
+    print(paste("Computer Score: ", computer))
+    break 
+  } else {
+      print(":)")
+  }
+ }
+}
+
+Game()
