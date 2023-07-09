@@ -1,0 +1,47 @@
+## Rock, Paper, Scissors
+
+
+import random
+
+def poa_ying_chub():
+    actions = ["Rock", "Paper", "Scissors"]
+    win = 0
+    loss = 0
+    tie = 0
+
+    while True:
+        print("Input: Rock, Paper, Scissors, Exit")
+        player = str(input("Rock, Paper, Scissors, or Exit?: "))
+    
+        if player == "Exit":
+            print("End Game")
+            break
+    
+        computer = actions[random.randint(0, 2)]
+
+        if player == computer:
+            tie += 1
+            print(f"you: {player}, computer: {computer}")
+            print("Draw")
+        elif player == "Rock" and computer == "Scissors":
+            win += 1
+            print(f"you: {player}, computer: {computer}")
+            print("You win")
+        elif player == "Paper" and computer == "Rock":
+            win += 1
+            print(f"you: {player}, computer: {computer}")
+            print("You win")
+        elif player == "Scissors" and computer == "Paper":
+            win += 1
+            print(f"you: {player}, computer: {computer}")
+            print("You win!")
+        else:
+            loss += 1
+            print(f"you: {player}, computer: {computer}")
+            print("You loss")
+    
+        print(("Wins: ", win))
+        print(("Losses: ", loss))
+        print(("Ties: ", tie))
+
+poa_ying_chub()
