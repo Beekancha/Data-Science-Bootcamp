@@ -1,0 +1,56 @@
+# install gazpacho
+!pip install gazpacho
+
+# get request
+
+from gazpacho import Soup
+from requests import get
+
+url = "https://www.imdb.com/search/title/?groups=top_100&sort=user_rating,desc"
+
+response = get(url)
+
+print(response.status_code)
+
+imdb = Soup(response.text)
+imdb
+
+type(web_imdb)
+
+imdb.find("h3")[5].strip()
+
+title_list = imdb.find("h3", {"class": "lister-item-header"})
+
+for title in title_list:
+    print(title.strip())
+    
+# list title
+titles = [title.strip() for title in title_list]
+print(titles)
+
+# list year
+years = imdb.find("span", {"class" : "lister-item-year"})
+years = [year.strip() for year in years]
+print(years)
+
+for year in years:
+    print(year.strip())
+    
+metascores = imdb.find("span", {"class" : "metascore"})
+metascores = [metascore.strip() for metascore in metascores]
+print(metascores)
+
+for metascore in metascores:
+    print(metascore.strip())
+
+import pandas as pd
+
+df = pd.DataFrame({
+    "title" : titles,
+    "year" : years,
+    "score" : metascores
+})
+
+df.head()
+
+df.to_csv("movies_world.csv")
